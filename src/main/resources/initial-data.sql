@@ -1,0 +1,1 @@
+insert into t2m.users (user_id,username,password,role) values (1,"administrator","T2M@Admin","ADMIN");

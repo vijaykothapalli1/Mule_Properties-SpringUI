@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+   <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <title>TIBCO2MuleSoft - ProwessSoft</title>
+      <link rel="shortcut icon" th:href="@{/images/favicon.ico}" />
+      <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+      <link rel="stylesheet" th:href="@{/css/typography.css}">
+      <link rel="stylesheet" th:href="@{/css/style.css}">
+      <link rel="stylesheet" th:href="@{/css/responsive.css}">
+      <meta http-equiv="refresh" content="30">
+      
+   </head>
+   <body>
+      <!-- loader Start -->
+      <div id="loading">
+         <div id="loading-center">
+            <div class="loader">
+               <div class="cube">
+                  <div class="sides">
+                     <div class="top"></div>
+                     <div class="right"></div>
+                     <div class="bottom"></div>
+                     <div class="left"></div>
+                     <div class="front"></div>
+                     <div class="back"></div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <!-- loader END -->
+      <!-- Wrapper Start -->
+      <div class="wrapper">
+         <!-- Sidebar  -->
+         <div th:replace="common/sidebar::sidebar"></div>
+         <!-- TOP Nav Bar -->
+         <div th:replace="common/topbar::topbar"></div>
+         <!-- TOP Nav Bar END -->
+         <!-- Page Content  -->
+         <div id="content-page" class="content-page">
+            <div class="container-fluid">
+               <div class="row">
+                       <div class="col-lg-12">
+                           <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
+                              <div class="iq-card-header d-flex justify-content-between">
+                                 <div class="iq-header-title">
+                                    <h4 class="card-title">Expired Projects</h4>
+                                 </div>
+                                 <div class="iq-card-header-toolbar d-flex align-items-center">
+                                    <div class="dropdown">
+                                       <span class="dropdown-toggle text-primary" id="dropdownMenuButton5" data-toggle="dropdown" aria-expanded="false">
+                                       <i class="ri-more-2-fill"></i>
+                                       </span>
+                                       <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton" style="">
+                                          <a class="dropdown-item" href="#"><i class="ri-eye-fill mr-2"></i>View</a>
+                                          <a class="dropdown-item" href="#"><i class="ri-delete-bin-6-fill mr-2"></i>Delete</a>
+                                          <a class="dropdown-item" href="#"><i class="ri-pencil-fill mr-2"></i>Edit</a>
+                                          <a class="dropdown-item" href="#"><i class="ri-printer-fill mr-2"></i>Print</a>
+                                          <a class="dropdown-item" href="#"><i class="ri-file-download-fill mr-2"></i>Download</a>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>                                                                                     
+                              <div class="iq-card-body">
+                                 <div class="table-responsive">
+                                    <table class="table mb-0 table-borderdered">
+                                       <thead>
+                                          <tr>
+                                             <th scope="col">Request ID</th>
+                                             <th scope="col">Uploaded Date</th>
+                                             <th scope="col">Status</th>
+                                             <th scope="col"></th>
+                                 
+
+                                          </tr>
+                                       </thead>
+                                       <tbody>
+                                           <!-- Iterate through projects and populate the table -->
+                                          <tr th:each="project : ${expiredProjects}">
+                                                 <td th:text="${project.requestId}"></td>
+                                                 <td th:text="${#dates.format(project.uploadedDt, 'dd-MM-yyyy  hh:mm:ss a')}"></td>
+                                                 <td th:text="${project.currentStatus}"></td>
+                                             <td>
+                                                <a class="btn btn-primary" th:href="@{/projects/{id}(id=${project.requestId})}">Details</a>
+                                             </td>
+                                             
+                                          </tr>
+                                         
+                                       </tbody>
+                                       
+                                    </table>
+                                 </div>
+                                 
+                                  <div th:if="${expiredProjects.totalPages > 1}" class="d-flex justify-content-center">
+                                       <ul class="pagination">
+                                           <li th:class="${currentPage == 0} ? 'page-item disabled' : 'page-item'">
+                                              <a class="page-link" th:href="@{/expired-projects(page=${currentPage-1})}" tabindex="-1">Previous</a>
+                                           </li>
+                                          <li th:each="i : ${#numbers.sequence(0, expiredProjects.totalPages)}" th:class=" ${currentPage == i} ? 'page-item active' : 'page-item'">
+                                               <a class="page-link" th:href="@{/expired-projects(page=${i})}" th:text="${i+1}"></a>
+                                          </li>
+                                         <li th:class="${currentPage == expiredProjects.totalPages-1} ? 'page-item disabled' : 'page-item'">
+                                                <a class="page-link" th:href="@{/expired-projects(page=${currentPage+1})}" tabindex="-1">Next</a>
+                                         </li>
+                                      </ul>
+                                 </div>
+                               </div>
+                                 
+                              </div>
+                           </div>
+                        </div>
+                  </div>
+            </div>
+         </div>
+      </div>
+      <!-- Wrapper END -->
+      <!-- Footer -->
+      <footer class="bg-white iq-footer">
+         <div class="container-fluid">
+            <div class="row">
+               <div class="col-lg-6">
+                  <ul class="list-inline mb-0">
+                     <li class="list-inline-item"><a href="privacy-policy.html">Privacy Policy</a></li>
+                     <li class="list-inline-item"><a href="terms-of-service.html">Terms of Use</a></li>
+                  </ul>
+               </div>
+               <div class="col-lg-6 text-right">
+                  Copyright 2020 <a href="#">ProwessSoft</a> All Rights Reserved.
+               </div>
+            </div>
+         </div>
+      </footer>
+      <!-- Footer END -->
+      <script th:src="@{/js/jquery.min.js}"></script>
+      <script th:src="@{/js/popper.min.js}"></script>
+      <script th:src="@{js/bootstrap.min.js}"></script>
+      <script th:src="@{js/jquery.appear.js}"></script>
+      <script th:src="@{js/countdown.min.js}"></script>
+      <script th:src="@{js/waypoints.min.js}"></script>
+      <script th:src="@{js/jquery.counterup.min.js}"></script>
+      <script th:src="@{js/wow.min.js}"></script>
+      <script th:src="@{js/apexcharts.js}"></script>
+      <script th:src="@{js/slick.min.js}"></script>
+      <script th:src="@{js/select2.min.js}"></script>
+      <script th:src="@{js/owl.carousel.min.js}"></script>
+      <script th:src="@{js/jquery.magnific-popup.min.js}"></script>
+      <script th:src="@{js/smooth-scrollbar.js}"></script>
+      <script th:src="@{js/chart-custom.js}"></script>
+      <script th:src="@{js/custom.js}"></script>
+      <script type="text/javascript">
+
+      $( document ).ready(function() {
+    	  function sendRedirect(){
+    		  window.location= baseUrl+"/my-projects";
+    	  }
+
+    	  $("#downloadSample").click(function(){
+
+        	});
+    	  
+
+    	 
+      
+    });
+
+      </script>
+   </body>
+</html>

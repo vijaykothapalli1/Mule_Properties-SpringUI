@@ -1,0 +1,287 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+   <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <title>TIBCO2MuleSoft - ProwessSoft</title>
+      <link rel="shortcut icon" th:href="@{/images/favicon.ico}" />
+      <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+      <link rel="stylesheet" th:href="@{/css/typography.css}">
+      <link rel="stylesheet" th:href="@{/css/style.css}">
+      <link rel="stylesheet" th:href="@{/css/responsive.css}">
+      <!--
+      <meta http-equiv="refresh" content="300">
+      -->
+      <style>
+      #hide_true{
+      display:none;
+      }
+      
+    li:first-child div#sts_completed{
+  	border-radius: 50%;
+	box-shadow: 0 0 0 0 rgba(0, 0, 0, 1);
+	border-color: #4CAF50!important;
+	}
+      
+    li:first-child div#sts_error{
+  	border-radius: 50%;
+	box-shadow: 0 0 0 0 rgba(0, 0, 0, 1);
+	border-color: #F44336!important;
+	}
+      
+
+li:first-child div#sts_progress{
+  	border-radius: 50%;
+	box-shadow: 0 0 0 0 rgba(0, 0, 0, 1);
+	transform: scale(1);
+	animation: pulse-blue 1s infinite;
+	border-color: #4CAF50!important;
+}
+
+@keyframes pulse-blue {
+	0% {
+		transform: scale(0.95);
+		box-shadow: 0 0 0 0 rgba(52, 172, 224, 0.7);
+	}
+	
+	70% {
+		transform: scale(1);
+		box-shadow: 0 0 0 10px rgba(52, 172, 224, 0);
+	}
+	
+	100% {
+		transform: scale(0.95);
+		box-shadow: 0 0 0 0 rgba(52, 172, 224, 0);
+	}
+}
+
+
+      </style>
+      
+   </head>
+   <body>
+      <!-- loader Start -->
+      <div id="loading">
+         <div id="loading-center">
+            <div class="loader">
+               <div class="cube">
+                  <div class="sides">
+                     <div class="top"></div>
+                     <div class="right"></div>
+                     <div class="bottom"></div>
+                     <div class="left"></div>
+                     <div class="front"></div>
+                     <div class="back"></div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <!-- loader END -->
+      <!-- Wrapper Start -->
+      <div class="wrapper">
+         <!-- Sidebar  -->
+         <div th:replace="common/sidebar::sidebar"></div>
+         <!-- TOP Nav Bar -->
+         <div th:replace="common/topbar::topbar"></div>
+         <!-- TOP Nav Bar END -->
+         <!-- Page Content  -->
+         <div id="content-page" class="content-page">
+            <div class="container-fluid">
+               <div class="row">
+                  <div class="col-lg-8">
+                     <div class="iq-card">
+                        <div class="iq-card-header d-flex justify-content-between">
+                           <div class="iq-header-title">
+                              <h4 class="card-title">Project Details</h4>
+                           </div>
+                           <div class="iq-card-header-toolbar d-flex align-items-center">
+                              <div class="dropdown">
+                                 <span class="dropdown-toggle" id="dropdownMenuButton1" data-toggle="dropdown">
+                                 <i class="ri-more-2-fill"></i>
+                                 </span>
+                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                                    <a class="dropdown-item" href="#"><i class="ri-eye-fill mr-2"></i>View</a>
+                                    <a class="dropdown-item" href="#"><i class="ri-delete-bin-6-fill mr-2"></i>Delete</a>
+                                    <a class="dropdown-item" href="#"><i class="ri-pencil-fill mr-2"></i>Edit</a>
+                                    <a class="dropdown-item" href="#"><i class="ri-printer-fill mr-2"></i>Print</a>
+                                    <a class="dropdown-item" href="#"><i class="ri-file-download-fill mr-2"></i>Download</a>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="iq-card-body">
+                           <form>
+                              <div class="form-group">
+                                 <label>Request ID:</label>
+                                 <input type="text" class="form-control" th:value="${projectInfo.data.requestId}" readonly>
+                              </div>
+                              <div class="form-group">
+                                 <label>Project Type:</label>
+                                 <input type="text" class="form-control" th:value="${projectInfo.data.projectType}" readonly>
+                              </div>
+                              <div class="form-group">
+                                 <label>Uploaded At:</label>
+                                 <input type="text" class="form-control" th:value="${#dates.format(projectInfo.data.uploadedDt, 'dd-MM-yyyy  hh:mm:ss a')}" readonly>
+                              </div>
+                              <div class="form-group">
+                                 <label>Current Status:</label>
+                                 <input type="text" class="form-control" th:value="${projectInfo.data.currentStatus}" readonly>
+                              </div>
+                              <!-- 
+                              <div class="form-group" th:id="'hide_'+${!projectInfo.data.isConversionCompleted}">
+                                 <label>DC Projects:</label>
+                                 <input type="text" class="form-control" th:value="${projectInfo.data.dcProjects}" readonly>
+                              </div>
+                              -->
+                              <a type="button" class="btn btn-primary" target="_blank" th:href="@{/download/project/{id}(id=${projectInfo.data.requestId})}" th:disabled="${!projectInfo.data.isConversionCompleted}">Download Artifacts</a>
+                              <a type="button" class="btn btn-success" target="_blank" th:href="@{/download/report/{id}(id=${projectInfo.data.requestId})}" th:disabled="${!projectInfo.data.isConversionCompleted}">Download Report</a>
+                              <span th:if="'TIBCO Domain Analysis' == ${projectInfo.data.projectType}">
+                              <a type="button" class="btn btn-warning" target="_blank" th:href="@{/projects/{id}/domain(id=${projectInfo.data.requestId})}" th:disabled="${!projectInfo.data.isConversionCompleted}">Domain Details</a>
+                              </span>
+                              <button type="button" class="btn iq-bg-danger">Cancel Request</button>
+                           </form>
+                        </div>
+                     </div>
+                     
+                  </div>
+                  <div class="col-lg-4">
+                     <div class="iq-card">
+                        <div class="iq-card-header d-flex justify-content-between">
+                           <div class="iq-header-title">
+                              <h4 class="card-title">Status Updates</h4>
+                           </div>
+                           <div class="iq-card-header-toolbar d-flex align-items-center">
+                              <div class="dropdown">
+                                 <span class="dropdown-toggle text-primary" id="dropdownMenuButton4" data-toggle="dropdown">
+                                 View All
+                                 </span>
+                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                                    <a class="dropdown-item" href="#"><i class="ri-eye-fill mr-2"></i>Refresh Status</a>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="iq-card-body" style="max-height: 360px;overflow-y: scroll;overflow-x: hidden;">
+                           <ul class="iq-timeline">
+                           
+                              
+                              <li th:each="s : ${projectInfo.data.oldStatusUpdates}">
+                                 <div class="timeline-dots border-primary blob" th:id="'sts_'+${projectInfo.data.indicatorStatus}"></div>
+                                 <h6 class="float-left mb-1" th:text="${s.value}">Client Call</h6>
+                                 <small class="float-right mt-1"  th:text="${#dates.format(s.key, 'dd-MM-yyyy  hh:mm:ss a')}">19 November 2019</small>
+                                 <div class="d-inline-block w-100">
+                                  
+                                 </div>
+                              </li>
+                             
+                              
+                           </ul>
+                        </div>
+                     </div>
+                     
+                  </div>
+                  
+               </div>
+            </div>
+         </div>
+      </div>
+      <!-- Wrapper END -->
+      <!-- Footer -->
+      <footer class="bg-white iq-footer">
+         <div class="container-fluid">
+            <div class="row">
+               <div class="col-lg-6">
+                  <ul class="list-inline mb-0">
+                     <li class="list-inline-item"><a href="privacy-policy.html">Privacy Policy</a></li>
+                     <li class="list-inline-item"><a href="terms-of-service.html">Terms of Use</a></li>
+                  </ul>
+               </div>
+               <div class="col-lg-6 text-right">
+                  Copyright 2020 <a href="#">ProwessSoft</a> All Rights Reserved.
+               </div>
+            </div>
+         </div>
+      </footer>
+      <!-- Footer END -->
+      <script th:src="@{/js/jquery.min.js}"></script>
+      <script th:src="@{/js/popper.min.js}"></script>
+      <script th:src="@{/js/bootstrap.min.js}"></script>
+      <script th:src="@{/js/jquery.appear.js}"></script>
+      <script th:src="@{/js/countdown.min.js}"></script>
+      <script th:src="@{/js/waypoints.min.js}"></script>
+      <script th:src="@{/js/jquery.counterup.min.js}"></script>
+      <script th:src="@{/js/wow.min.js}"></script>
+      <script th:src="@{/js/apexcharts.js}"></script>
+      <script th:src="@{/js/slick.min.js}"></script>
+      <script th:src="@{/js/select2.min.js}"></script>
+      <script th:src="@{/js/owl.carousel.min.js}"></script>
+      <script th:src="@{/js/jquery.magnific-popup.min.js}"></script>
+      <script th:src="@{/js/smooth-scrollbar.js}"></script>
+      <script th:src="@{/js/chart-custom.js}"></script>
+      <script th:src="@{/js/custom.js}"></script>
+      <script type="text/javascript">
+
+      $( document ).ready(function() {
+    	  function sendRedirect(){
+    		  window.location= baseUrl+"/my-projects";
+    	  }
+
+    	  $("#downloadSample").click(function(){
+
+        	});
+    	  
+
+    	 $("#uploadBtn").click(function(){
+    		 
+    		 var input_type = $("#input_type").val();
+    		 var input_file = $("#input_file").val();
+    		 var config_file = $("#config_file").val();
+    		 
+    		 if(input_file == ""){
+    			 alert("Select input file");
+    			 return false;
+    		 }
+    		 if(config_file == ""){
+    			 alert("Select config file");
+    			 return false;
+    		 }
+    		 console.log(new FormData($('#uploadForm')[0]));
+    		
+    		 $("#uploadBtn").attr("disabled", true); 
+    		 $("#uploadBtn").css({'cursor' : 'wait'});
+             $.ajax({
+                 url: 'http://127.0.0.1:9001/api/uploadProject',
+                 type:'post',
+                 data: new FormData($('#uploadForm')[0]),
+                 processData: false,
+                 contentType: false,
+                 success:function(data){
+                     if(data.success == true)
+                     {
+                    	alert("Project uploaded");
+                    	setTimeout(sendRedirect, 2000);
+                        
+                     }
+                     else
+                     {
+                    	 alert(data.message)
+                    	 //showAlert("Unauthorized! \nPlease check Client ID and Secret","danger")
+                     }
+                 },
+                 error:function(e){
+                	 alert("Unable to process request. Please contact support.");
+                 },
+                 complete:function(xhr,status){
+                	 $("#uploadBtn").css({'cursor' : 'default'});
+                	 $("#uploadBtn").attr("disabled", false); 
+                 }
+             });
+    		 return false;
+         });
+      
+    });
+
+      </script>
+   </body>
+</html>

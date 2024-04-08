@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+   <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <title>TIBCO2MuleSoft - ProwessSoft</title>
+      <link rel="shortcut icon" th:href="@{/images/favicon.ico}" />
+      <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+      <link rel="stylesheet" th:href="@{/css/typography.css}">
+      <link rel="stylesheet" th:href="@{/css/style.css}">
+      <link rel="stylesheet" th:href="@{/css/responsive.css}">
+   </head>
+   <body>
+      <!-- loader Start -->
+      <div id="loading">
+         <div id="loading-center">
+            <div class="loader">
+               <div class="cube">
+                  <div class="sides">
+                     <div class="top"></div>
+                     <div class="right"></div>
+                     <div class="bottom"></div>
+                     <div class="left"></div>
+                     <div class="front"></div>
+                     <div class="back"></div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <!-- loader END -->
+      <!-- Wrapper Start -->
+      <div class="wrapper">
+         <!-- Sidebar  -->
+         <div th:replace="common/sidebar::sidebar"></div>
+         <!-- TOP Nav Bar -->
+         <div th:replace="common/topbar::topbar"></div>
+         <!-- TOP Nav Bar END -->
+         <!-- Page Content  -->
+         <div id="content-page" class="content-page">
+            <div class="container-fluid">
+               <div class="col-sm-12 col-lg-12">
+                     <div class="iq-card">
+                        <div class="iq-card-header d-flex justify-content-between">
+                           <div class="iq-header-title">
+                              <h4 class="card-title">About ProwessSoft TIBCO to MuleSoft Migration accelerator</h4>
+                           </div>
+                        </div>
+                        <div class="iq-card-body">
+                           <p>
+                           The growing demand, or might we say the necessity of platform-as-a-service (PaaS), is a testament to the popularity of cloud migration services. In 2021, Gartner predicted that global end-user spending on public cloud services would grow 23.1% in 2021 to a total of $332.3 billion, up from $270 billion in 2020.
+</p><p>
+Legacy systems require huge capital to set up and thus sometimes become a hindrance to growth. The challenges are even greater when the business sees a sudden onset of growth or isn’t confined to one industry. Legacy Cloud Migration is considered the most-efficient way of solving this major pain point. MuleSoft APIs enable businesses to make this process seamless and more scalable. Through MuleSoft data migration, businesses can future-proof their legacy systems with cloud integration at a minimal cost.
+                           </p>
+                           
+                        </div>
+                     </div>
+                    
+                     
+                  </div>
+            </div>
+         </div>
+      </div>
+      <!-- Wrapper END -->
+      <!-- Footer -->
+      <footer class="bg-white iq-footer">
+         <div class="container-fluid">
+            <div class="row">
+               <div class="col-lg-6">
+                  <ul class="list-inline mb-0">
+                     <li class="list-inline-item"><a href="privacy-policy.html">Privacy Policy</a></li>
+                     <li class="list-inline-item"><a href="terms-of-service.html">Terms of Use</a></li>
+                  </ul>
+               </div>
+               <div class="col-lg-6 text-right">
+                  Copyright 2020 <a href="#">Sofbox</a> All Rights Reserved.
+               </div>
+            </div>
+         </div>
+      </footer>
+      <!-- Footer END -->
+      <script th:src="@{/js/jquery.min.js}"></script>
+      <script th:src="@{/js/popper.min.js}"></script>
+      <script th:src="@{/js/bootstrap.min.js}"></script>
+      <script th:src="@{/js/jquery.appear.js}"></script>
+      <script th:src="@{/js/countdown.min.js}"></script>
+      <script th:src="@{/js/waypoints.min.js}"></script>
+      <script th:src="@{/js/jquery.counterup.min.js}"></script>
+      <script th:src="@{/js/wow.min.js}"></script>
+      <script th:src="@{/js/apexcharts.js}"></script>
+      <script th:src="@{/js/slick.min.js}"></script>
+      <script th:src="@{/js/select2.min.js}"></script>
+      <script th:src="@{/js/owl.carousel.min.js}"></script>
+      <script th:src="@{/js/jquery.magnific-popup.min.js}"></script>
+      <script th:src="@{/js/smooth-scrollbar.js}"></script>
+      <script th:src="@{/js/chart-custom.js}"></script>
+      <script th:src="@{/js/custom.js}"></script>
+      <script type="text/javascript">
+
+      $( document ).ready(function() {
+    	  function sendRedirect(){
+    		  window.location= baseUrl+"/my-projects";
+    	  }
+
+    	  $("#downloadSample").click(function(){
+
+        	});
+    	  
+
+    	 $("#uploadBtn").click(function(){
+    		 
+    		 var input_type = $("#input_type").val();
+    		 var input_file = $("#input_file").val();
+    		 var config_file = $("#config_file").val();
+    		 
+    		 if(input_file == ""){
+    			 alert("Select input file");
+    			 return false;
+    		 }
+    		 if(config_file == ""){
+    			 alert("Select config file");
+    			 return false;
+    		 }
+    		 console.log(new FormData($('#uploadForm')[0]));
+    		
+    		 $("#uploadBtn").attr("disabled", true); 
+    		 $("#uploadBtn").css({'cursor' : 'wait'});
+             $.ajax({
+                 url: 'http://127.0.0.1:9001/api/uploadProject',
+                 type:'post',
+                 data: new FormData($('#uploadForm')[0]),
+                 processData: false,
+                 contentType: false,
+                 success:function(data){
+                     if(data.success == true)
+                     {
+                    	alert("Project uploaded");
+                    	setTimeout(sendRedirect, 2000);
+                        
+                     }
+                     else
+                     {
+                    	 alert(data.message)
+                    	 //showAlert("Unauthorized! \nPlease check Client ID and Secret","danger")
+                     }
+                 },
+                 error:function(e){
+                	 alert("Unable to process request. Please contact support.");
+                 },
+                 complete:function(xhr,status){
+                	 $("#uploadBtn").css({'cursor' : 'default'});
+                	 $("#uploadBtn").attr("disabled", false); 
+                 }
+             });
+    		 return false;
+         });
+      
+    });
+
+      </script>
+   </body>
+</html>

@@ -1,0 +1,43 @@
+<div class="iq-sidebar" th:fragment="sidebar">
+            <div class="iq-sidebar-logo d-flex justify-content-between">
+               <a th:href="@{/my-projects}">
+               <span>T2M</span>
+               </a>
+               <div class="iq-menu-bt align-self-center">
+                  <div class="wrapper-menu">
+                     <div class="line-menu half start"></div>
+                     <div class="line-menu"></div>
+                     <div class="line-menu half end"></div>
+                  </div>
+               </div>
+            </div>
+            <div id="sidebar-scrollbar">
+               <nav class="iq-sidebar-menu">
+                  <ul id="iq-sidebar-toggle" class="iq-menu">
+                     <li class="iq-menu-title"><i class="ri-separator"></i><span>Main</span></li>
+                     <li><a th:href="@{/my-projects}" class="iq-waves-effect"><i class="ri-list-ordered"></i><span>My Projects</span></a></li>
+                     <li><a th:href="@{/tibco2mule}" class="iq-waves-effect"><i class="ri-terminal-window-line"></i><span>TIBCO2Mule</span></a></li>
+                     <li><a th:href="@{/generate-ramls}" class="iq-waves-effect"><i class="ri-code-box-line"></i><span>Generate RAMLs</span></a></li>
+                     <li><a th:href="@{/generate-transformations}" class="iq-waves-effect"><i class="ri-git-pull-request-line"></i><span>Generate Transformations</span></a></li>
+                     <li><a th:href="@{/convert-global-vars}" class="iq-waves-effect"><i class="ri-vuejs-line"></i><span>Convert Global Vars</span></a></li>
+                     <li><a th:href="@{/analyse-tibco-domain}" class="iq-waves-effect"><i class="ri-file-damage-line"></i><span>Analyse TIBCO Domain</span></a></li>
+                     
+                     <li><a th:href="@{/expired-projects}" class="iq-waves-effect"><i class="ri-delete-bin-2-line"></i><span>Expired Projects</span></a></li>
+                     <li class="iq-menu-title"><i class="ri-separator"></i><span>Documentation</span></li>
+                     <li><a th:href="@{/help}" class="iq-waves-effect"><i class="ri-question-line"></i><span>Help</span></a></li>
+                     <li><a th:href="@{/about}" class="iq-waves-effect"><i class="ri-information-line"></i><span>About</span></a></li>
+                     <!-- 
+                     <li class="iq-menu-title"><i class="ri-separator"></i><span>Legal</span></li>
+                     <li><a href="#" class="iq-waves-effect"><i class="ri-bookmark-line"></i><span>Privacy Policy</span></a></li>
+                     <li><a href="#" class="iq-waves-effect"><i class="ri-chat-check-line"></i><span>License</span></a></li>
+                     -->
+                     <li class="iq-menu-title"><i class="ri-separator"></i><span>Administration</span></li>
+                     <li><a href="#" class="iq-waves-effect"><i class="ri-git-repository-line"></i><span>All Projects</span></a></li>
+                     <li><a href="#" class="iq-waves-effect"><i class="ri-user-2-line"></i><span>Users List</span></a></li>
+                     <li><a href="#" class="iq-waves-effect"><i class="ri-braces-line"></i><span>Logs</span></a></li>
+                     
+                  </ul>
+               </nav>
+               <div class="p-3"></div>
+            </div>
+         </div>
